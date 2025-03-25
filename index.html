@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>开发预估模型</title>
+    <title>开发计划</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -11,13 +11,14 @@
             background-color: #f5f6fa;
             color: #333;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
+            font-size: 16px;
         }
         h1 {
             text-align: center;
             color: #2c3e50;
-            font-size: 2em;
-            margin-bottom: 30px;
+            font-size: 1.8em;
+            margin-bottom: 20px;
         }
         .container {
             max-width: 1000px;
@@ -25,7 +26,7 @@
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            padding: 20px;
+            padding: 15px;
         }
         table {
             width: 100%;
@@ -33,7 +34,7 @@
             border-spacing: 0 10px;
         }
         th, td {
-            padding: 15px;
+            padding: 12px;
             text-align: left;
             vertical-align: middle;
         }
@@ -58,6 +59,7 @@
             font-size: 1em;
             background: transparent;
             color: #333;
+            box-sizing: border-box;
             transition: border 0.3s ease;
         }
         input:focus {
@@ -81,28 +83,51 @@
             padding: 10px;
             background: #e9ecef;
             border-radius: 8px;
+            font-weight: 500;
         }
         details[open] summary {
             border-radius: 8px 8px 0 0;
         }
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            table, th, td {
-                display: block;
-                width: 100%;
+            h1 {
+                font-size: 1.5em;
+            }
+            .container {
+                padding: 10px;
+            }
+            table {
+                border-spacing: 0;
             }
             th, td {
+                display: block;
+                width: 100%;
                 padding: 10px;
+                box-sizing: border-box;
+            }
+            th {
+                border-radius: 8px;
             }
             tr {
                 margin-bottom: 15px;
                 border-radius: 8px;
+                display: block;
+            }
+            td:nth-child(2), td:nth-child(3) {
+                padding-left: 20px;
+            }
+            input[type="number"], input[type="text"] {
+                font-size: 0.9em;
+            }
+            summary {
+                font-size: 0.95em;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>开发预估模型</h1>
+        <h1>开发计划模型</h1>
         <table id="devTable">
             <tr><th>类别</th><th>详情</th><th>估算成本/价值 (NZD)</th></tr>
             <tr><td>策略概述</td><td><input type="text" id="strategyDesc" value="拆除现有144平米房屋，建造可变栋数140平米新房屋（双层）" class="editable"></td><td>-</td></tr>
@@ -242,7 +267,7 @@
             const annualRoe = roe / 2;
             document.getElementById("annualRoe").textContent = annualRoe.toFixed(1) + "%";
 
-            // 更新融资需求描述（仅更新计算部分，用户可手动修改文本）
+            // 更新融资需求描述（仅当未手动修改时）
             const loanAmountInMillions = (loanAmount / 10000).toFixed(1);
             const financingNeedsInput = document.getElementById("financingNeedsDesc");
             if (financingNeedsInput.value.includes("万贷款，7%利率，2年")) {
