@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>开发计划</title>
+    <title>开发模型</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -88,7 +88,6 @@
         details[open] summary {
             border-radius: 8px 8px 0 0;
         }
-        /* 响应式设计 */
         @media (max-width: 768px) {
             h1 {
                 font-size: 1.5em;
@@ -127,7 +126,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>开发计划模型</h1>
+        <h1>开发模型</h1>
         <table id="devTable">
             <tr><th>类别</th><th>详情</th><th>估算成本/价值 (NZD)</th></tr>
             <tr><td>策略概述</td><td><input type="text" id="strategyDesc" value="拆除现有144平米房屋，建造可变栋数140平米新房屋（双层）" class="editable"></td><td>-</td></tr>
@@ -136,11 +135,20 @@
             <tr><td>房屋数量</td><td>建造的房屋栋数</td><td><input type="number" id="houseCount" value="3" class="editable" min="1"></td></tr>
             <tr><td>每栋售价</td><td>每栋房屋的销售价格（默认130万，含8%溢价）</td><td><input type="number" id="pricePerHouse" value="1300000" class="editable"></td></tr>
             <tr><td>预计收入</td><td>房屋数量 × 每栋售价</td><td id="revenue" class="calculated">3900000</td></tr>
-            <tr><td>中介费率</td><td>销售中介费百分比（默认2.3%）</td><td><input type="number" id="agentFeeRate" value="2.3" class="editable" step="0.1"></td></tr>
-            <tr><td>法律费用</td><td>销售相关的法律费用（默认3万）</td><td><input type="number" id="legalFees" value="30000" class="editable"></td></tr>
-            <tr><td>销售费用</td><td>预计收入 × 中介费率 + 法律费用</td><td id="sellingCosts" class="calculated">119700</td></tr>
-            <tr><td>净收入</td><td>预计收入 - 销售费用</td><td id="netRevenue" class="calculated">3780300</td></tr>
+                       <tr><td>净收入</td><td>预计收入 - 销售费用</td><td id="netRevenue" class="calculated">3780300</td></tr>
             <tr><td>初始投资</td><td>土地价值（2025年估算）</td><td><input type="number" id="landValue" value="1450000" class="editable"></td></tr>
+            <tr>
+                <td colspan="3">
+                    <details>
+                        <summary>销售费用（点击展开/收起）</summary>
+                        <table>
+                            <tr><td>中介费率</td><td>销售中介费百分比（默认2.3%）</td><td><input type="number" id="agentFeeRate" value="2.3" class="editable" step="0.1"></td></tr>
+                            <tr><td>法律费用</td><td>销售相关的法律费用（默认3万）</td><td><input type="number" id="legalFees" value="30000" class="editable"></td></tr>
+                            <tr><td>销售费用总计</td><td>预计收入 × 中介费率 + 法律费用</td><td id="sellingCosts" class="calculated">119700</td></tr>
+                        </table>
+                    </details>
+                </td>
+            </tr>
             <tr>
                 <td colspan="3">
                     <details>
@@ -149,21 +157,40 @@
                             <tr><td>- 拆除费用</td><td>降低成本，假设最少石棉或搬迁准备</td><td><input type="number" id="demolition" value="20000" class="editable"></td></tr>
                             <tr><td>- 分割（测量、法律）</td><td>测量（2万）、法律（0.5万）、基础设施（4.5万）</td><td><input type="number" id="subdivision" value="70000" class="editable"></td></tr>
                             <tr><td>- 设计（建筑）</td><td>建筑成本的7.5%</td><td id="design" class="calculated formula-group">50000</td></tr>
-                            <tr><td>- 资源许可</td><td>资源许可费用（默认1万）</td><td><input type="number" id="resourceConsent" value="10000" class="editable"></td></tr>
-                            <tr><td>- 每栋建筑许可费用</td><td>每栋房屋的建筑许可费用（默认0.5万）</td><td><input type="number" id="buildingPermitPerHouse" value="5000" class="editable"></td></tr>
-                            <tr><td>- 建筑许可总费用</td><td>房屋数量 × 每栋建筑许可费用</td><td id="buildingPermits" class="calculated formula-group">15000</td></tr>
-                            <tr><td>- 公用设施连接</td><td>每栋0.5万（水0.25万 + 电0.25万）</td><td id="utilities" class="calculated formula-group">15000</td></tr>
-                            <tr><td>- 每平米建筑成本</td><td>每平米建筑费用（默认2500元）</td><td><input type="number" id="costPerSqm" value="2500" class="editable"></td></tr>
-                            <tr><td>- 每栋面积</td><td>每栋房屋的建筑面积（默认140平米）</td><td><input type="number" id="sqmPerHouse" value="140" class="editable"></td></tr>
-                            <tr><td>- 建筑（房屋）</td><td>房屋数量 × 每栋面积 × 每平米建筑成本</td><td id="construction" class="calculated formula-group">1050000</td></tr>
+                            <tr>
+                                <td colspan="3">
+                                    <details>
+                                        <summary>- 建筑（房屋）（点击展开/收起）</summary>
+                                        <table>
+                                            <tr><td>每平米建筑成本</td><td>每平米建筑费用（默认2500元）</td><td><input type="number" id="costPerSqm" value="2500" class="editable"></td></tr>
+                                            <tr><td>每栋面积</td><td>每栋房屋的建筑面积（默认140平米）</td><td><input type="number" id="sqmPerHouse" value="140" class="editable"></td></tr>
+                                            <tr><td>建筑总成本</td><td>房屋数量 × 每栋面积 × 每平米建筑成本</td><td id="construction" class="calculated formula-group">1050000</td></tr>
+                                        </table>
+                                    </details>
+                                </td>
+                            </tr>
                             <tr><td>- 土方工程</td><td>场地准备、平整、基础（先前范围中值）</td><td><input type="number" id="earthworks" value="35000" class="editable"></td></tr>
-                            <tr><td>- 开发贡献费用</td><td>房屋数量 × 每单位3万（奥克兰议会政策，无抵扣）</td><td id="contributions" class="calculated formula-group">90000</td></tr>
                             <tr><td>- 杂项费用</td><td>建筑成本的7.5%应急费用</td><td id="misc" class="calculated formula-group">70000</td></tr>
+                            <tr>
+                                <td colspan="3">
+                                    <details>
+                                        <summary>- 许可合规总费用（点击展开/收起）</summary>
+                                        <table>
+                                            <tr><td>资源许可</td><td>资源许可费用（默认1万）</td><td><input type="number" id="resourceConsent" value="10000" class="editable"></td></tr>
+                                            <tr><td>每栋建筑许可费用</td><td>每栋房屋的建筑许可费用（默认0.5万）</td><td><input type="number" id="buildingPermitPerHouse" value="5000" class="editable"></td></tr>
+                                            <tr><td>开发贡献费用</td><td>房屋数量 × 每单位3万（奥克兰议会政策，无抵扣）</td><td id="contributions" class="calculated formula-group">90000</td></tr>
+                                            <tr><td>许可合规总费用</td><td>资源许可 + 每栋建筑许可费用 × 房屋数量 + 开发贡献费用</td><td id="complianceCosts" class="calculated">115000</td></tr>
+                                        </table>
+                                    </details>
+                                </td>
+                            </tr>
+                            <tr><td>- 公用设施连接</td><td>每栋0.5万（水0.25万 + 电0.25万）</td><td id="utilities" class="calculated formula-group">15000</td></tr>
                             <tr><td>总开发成本</td><td>以上各项总和</td><td id="devCosts" class="calculated">1355000</td></tr>
                         </table>
                     </details>
                 </td>
-            </tr>
+             </tr>
+
             <tr><td>贷款金额</td><td>用户可控制的贷款金额</td><td><input type="number" id="loanAmount" value="1355000" class="editable"></td></tr>
             <tr><td>贷款利息</td><td>贷款金额 × 7% × 2年（逐步提款，约10%）</td><td id="loanInterest" class="calculated">135000</td></tr>
             <tr><td>总项目成本</td><td>土地 + 开发成本 + 贷款利息</td><td id="totalCost" class="calculated">2940000</td></tr>
@@ -219,24 +246,23 @@
             const design = construction * 0.075;
             document.getElementById("design").textContent = design.toLocaleString();
 
-            // 计算建筑许可总费用
+            // 计算许可合规费用
             const buildingPermits = houseCount * buildingPermitPerHouse;
-            document.getElementById("buildingPermits").textContent = buildingPermits.toLocaleString();
+            const contributions = houseCount * 30000; // 每栋 NZD 30,000
+            document.getElementById("contributions").textContent = contributions.toLocaleString();
+            const complianceCosts = resourceConsent + buildingPermits + contributions;
+            document.getElementById("complianceCosts").textContent = complianceCosts.toLocaleString();
 
             // 计算公用设施连接
             const utilities = houseCount * 5000; // 每栋 NZD 5,000
             document.getElementById("utilities").textContent = utilities.toLocaleString();
-
-            // 计算开发贡献费用
-            const contributions = houseCount * 30000; // 每栋 NZD 30,000
-            document.getElementById("contributions").textContent = contributions.toLocaleString();
 
             // 计算杂项费用（7.5% of construction）
             const misc = construction * 0.075;
             document.getElementById("misc").textContent = misc.toLocaleString();
 
             // 计算开发成本
-            const devCosts = demolition + subdivision + design + resourceConsent + buildingPermits + utilities + construction + earthworks + contributions + misc;
+            const devCosts = demolition + subdivision + design + construction + earthworks + complianceCosts + utilities + misc;
             document.getElementById("devCosts").textContent = devCosts.toLocaleString();
 
             // 计算贷款利息（贷款金额的10%，基于7%利率2年逐步提款）
